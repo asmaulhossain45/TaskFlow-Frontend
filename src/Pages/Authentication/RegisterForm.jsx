@@ -1,12 +1,39 @@
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../Providers/AuthProvider";
 
 const RegisterForm = () => {
+  const navigate = useNavigate();
   const { register, handleSubmit } = useForm();
-  const onSubmit = (data) => console.log(data);
+  const [isDisable, setDisable] = useState(false);
+  const { createUser, updateUser, userLogOut } = useContext(AuthContext);
+
+  const onSubmit = async (data) => {
+    setDisable(true);
+    const name = data.name;
+    const email = data.email;
+    const password = data.password;
+    try {
+      await createUser(email, password).then(async () => {
+        await updateUser(name);
+        await userLogOut();
+        navigate("/dashboard/profile");
+        toast.success("Account Created");
+      });
+    } catch (err) {
+      toast.error(err.message);
+    }
+    setDisable(false);
+  };
+
   return (
     <>
       <div>
-        <h1 className="text-center text-2xl font-bold uppercase text-white">Create Account</h1>
+        <h1 className="text-center text-2xl font-bold uppercase text-white">
+          Create Account
+        </h1>
       </div>
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -42,7 +69,10 @@ const RegisterForm = () => {
         <input
           type="submit"
           value="Sign Up"
-          className="text-lg font-bold text-secondary bg-white py-1 rounded-md uppercase"
+          className={`${
+            isDisable ? "text-primary/30 cursor-wait" : "cursor-pointer"
+          } text-lg font-bold text-secondary bg-white py-1 rounded-md uppercase`}
+          disabled={isDisable}
         />
       </form>
     </>

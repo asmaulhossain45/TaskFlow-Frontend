@@ -25,15 +25,14 @@ const AuthProvider = ({ children }) => {
   };
 
   // Update user Profile
-  const handleUserUpdate = (name, photoURL) => {
+  const updateUser = (name) => {
     return updateProfile(auth.currentUser, {
       displayName: name,
-      photoURL: photoURL,
     });
   };
 
   // Login User With E-mail & Password
-  const loginUser = (email, password) => {
+  const userLogin = (email, password) => {
     return signInWithEmailAndPassword(auth, email, password);
   };
 
@@ -59,19 +58,18 @@ const AuthProvider = ({ children }) => {
   }, []);
 
   //   User Log Out Section
-  const handleLogOut = () => {
+  const userLogOut = () => {
     setLoading(true);
     return signOut(auth);
   };
 
   const userInfo = {
-    createUser,
-    loginUser,
-    handleLogOut,
-    handleUserUpdate,
     user,
-    setUser,
     loading,
+    userLogin,
+    createUser,
+    userLogOut,
+    updateUser,
     googleLogin,
     githubLogin,
   };
