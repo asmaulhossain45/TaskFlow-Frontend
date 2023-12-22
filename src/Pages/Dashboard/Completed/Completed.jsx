@@ -1,6 +1,6 @@
 const Completed = () => {
   return (
-    <div>
+    <div className="min-h-screen w-full bg-success/50">
       <h1>Completed</h1>
     </div>
   );
