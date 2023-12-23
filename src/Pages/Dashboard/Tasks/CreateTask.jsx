@@ -1,19 +1,26 @@
+import PropTypes from "prop-types";
+import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import useAxios from "../CustomHook/useAxios";
+import useAxios from "../../../CustomHook/useAxios";
+import useTasks from "../../../CustomHook/useTasks";
+import { AuthContext } from "../../../Providers/AuthProvider";
 
-const AddTask = () => {
+const CreateTask = ({ isOpen, setOpen }) => {
   const axiosPublic = useAxios();
+  const { user } = useContext(AuthContext);
+  const { refetch } = useTasks();
   const { register, handleSubmit, reset } = useForm();
 
   const onSubmit = async (data) => {
-    const newData = { ...data, status: "To-Do" };
-    console.log(newData);
+    const newData = { ...data, status: "To-Do", user: `${user.email}` };
     try {
       await axiosPublic.post("/task", newData).then((res) => {
         console.log(res);
+        refetch();
         toast.success("Task Saved");
         reset();
+        setOpen(!isOpen);
       });
     } catch (err) {
       toast.error(err.message);
@@ -22,6 +29,11 @@ const AddTask = () => {
 
   return (
     <>
+      <div>
+        <h1 className="text-center text-2xl text-white font-semibold my-5">
+          Create Task
+        </h1>
+      </div>
       <form
         method="dialog"
         onSubmit={handleSubmit(onSubmit)}
@@ -71,4 +83,9 @@ const AddTask = () => {
   );
 };
 
-export default AddTask;
+export default CreateTask;
+
+CreateTask.propTypes = {
+  isOpen: PropTypes.bool,
+  setOpen: PropTypes.func,
+};

@@ -4,7 +4,11 @@ import useAxios from "./useAxios";
 const useTasks = () => {
   const axiosPublic = useAxios();
 
-  const { isLoading, data: tasks } = useQuery({
+  const {
+    isLoading,
+    refetch,
+    data: tasks,
+  } = useQuery({
     queryKey: ["Tasks"],
     queryFn: async () => {
       try {
@@ -16,7 +20,7 @@ const useTasks = () => {
     },
   });
 
-  return { isLoading, tasks };
+  return { isLoading, refetch, tasks };
 };
 
 export default useTasks;

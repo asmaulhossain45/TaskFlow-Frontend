@@ -17,7 +17,7 @@ const LoginForm = () => {
     const password = data.password;
     try {
       await userLogin(email, password).then(async () => {
-        navigate("/dashboard/profile");
+        navigate("/dashboard");
         toast.success("Login Successfully");
       });
     } catch (err) {

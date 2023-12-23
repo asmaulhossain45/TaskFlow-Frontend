@@ -1,15 +1,18 @@
 import { useContext } from "react";
 import toast from "react-hot-toast";
 import { FaGithub, FaGoogle, FaTwitter } from "react-icons/fa";
-import Swal from 'sweetalert2';
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import { AuthContext } from "../../Providers/AuthProvider";
 
 const SocialLogin = () => {
+  const navigate = useNavigate();
   const { googleLogin } = useContext(AuthContext);
 
   const handleGoogleLogin = async () => {
     try {
       await googleLogin().then(async () => {
+        navigate("/dashboard");
         Swal.fire({
           position: "center",
           icon: "success",
