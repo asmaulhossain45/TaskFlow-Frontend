@@ -46,7 +46,7 @@ const TaskSection = ({
       await axiosPublic.patch(`/task/${id}`, {taskName}).then((res) => {
         console.log(res);
         refetch();
-        toast("Status Updated");
+        toast.success("Status Updated");
       });
     } catch (err) {
       toast.error(err.message);

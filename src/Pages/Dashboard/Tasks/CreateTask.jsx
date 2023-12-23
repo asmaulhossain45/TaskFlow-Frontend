@@ -6,7 +6,7 @@ import useAxios from "../../../CustomHook/useAxios";
 import useTasks from "../../../CustomHook/useTasks";
 import { AuthContext } from "../../../Providers/AuthProvider";
 
-const CreateTask = ({ isOpen, setOpen }) => {
+const CreateTask = ({ toggle, setToggle }) => {
   const axiosPublic = useAxios();
   const { user } = useContext(AuthContext);
   const { refetch } = useTasks();
@@ -20,7 +20,7 @@ const CreateTask = ({ isOpen, setOpen }) => {
         refetch();
         toast.success("Task Saved");
         reset();
-        setOpen(!isOpen);
+        setToggle(!toggle);
       });
     } catch (err) {
       toast.error(err.message);
@@ -86,6 +86,6 @@ const CreateTask = ({ isOpen, setOpen }) => {
 export default CreateTask;
 
 CreateTask.propTypes = {
-  isOpen: PropTypes.bool,
-  setOpen: PropTypes.func,
+  toggle: PropTypes.bool,
+  setToggle: PropTypes.func,
 };

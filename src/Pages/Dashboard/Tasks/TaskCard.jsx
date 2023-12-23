@@ -8,7 +8,7 @@ import useTasks from "../../../CustomHook/useTasks";
 const TaskCard = ({ task }) => {
   const axiosPublic = useAxios();
   const { refetch } = useTasks();
-  const { _id, title, priority, deadline } = task;
+  const { _id, title, priority, deadline, description } = task;
 
   let color = "bg-warning";
 
@@ -52,7 +52,10 @@ const TaskCard = ({ task }) => {
       } bg-white mt-2 rounded-md p-3 space-y-2`}
     >
       <div className="flex justify-between items-start">
+        <div>
         <h1 className="font-semibold">{title}</h1>
+        <h1 className="text-xs text-justify mt-1 text-black/70">{description}</h1>
+        </div>
         <button onClick={handleDeleteTask} className="text-error">
           <FaMinusCircle />
         </button>

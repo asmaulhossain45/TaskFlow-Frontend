@@ -20,7 +20,7 @@ const TaskList = ({ tasks, setTasks }) => {
   const taskNames = ["To-Do", "Ongoing", "Completed"];
 
   return (
-    <div className="flex flex-col md:flex-row justify-evenly gap-6 w-full px-5 md:px-10">
+    <div className="flex flex-col md:flex-row justify-evenly gap-6 w-full">
       {taskNames &&
         taskNames.map((taskName, idx) => (
           <TaskSection
